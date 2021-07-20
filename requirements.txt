@@ -1,0 +1,6 @@
+tensorflow==2.4.1
+requests
+flask
+opencv-python
+numpy
+keras
