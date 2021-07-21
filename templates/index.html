@@ -7,7 +7,22 @@
         <label for="imageUpload" class="upload-label">
             Choose a scanned image of retina...
         </label>
-        <input type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg">
+        <input type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg, .jfif " onchange="validateFileType()" required>
+		<script type="text/javascript">
+		function validateFileType()
+		{
+		var imageUpload= document.getElementById("imageUpload").value;
+		var idxDot=imageUpload.lastIndexOf(".") + 1;
+		var extFile=imageUpload.substr(idxDot,imageUpload.length).toLowerCase();
+		if(extFile=="jpg" || extFile=="jpeg" || extFile=="png" || extFile=="jfif")
+		{}
+		else
+		{
+			alert("Only jpg/jpeg/jfif and png files are allowed!");
+			document.getElementById("imageUpload").value=null;
+		}
+		}
+		</script>
     </form>
 
     <div class="image-section" style="display:none;">
