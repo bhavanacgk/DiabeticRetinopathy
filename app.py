@@ -8,7 +8,7 @@ app = Flask(__name__)
 UPLOAD_FOLDER = './upload'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-MODEL_PATH = './model/model.hdf5'
+MODEL_PATH = './model/model3.h5'
 saved_model = load_model(MODEL_PATH,compile=False)
 
 @app.route('/', methods=['GET'])
@@ -17,7 +17,6 @@ def index():
 
 @app.route('/predict',methods=['GET','POST'])
 def predict():
-    class_labels = ['No DR', 'Mild DR', 'Moderate DR', 'Severe DR', 'Proliferative DR']
     print(request.files)
     if request.method == 'POST':
         image_file = request.files['file']
@@ -27,10 +26,20 @@ def predict():
         img = cv2.resize(img,(64,64))
         img = np.reshape(img,[1,64,64,3])
         d = saved_model.predict(img) 
-        result=d[0][0] 
-        r=round(result*10)
-        label=class_labels[r]
-        return label
+        r=d[0][0]
+        r=round(r)
+        if(r==0):
+            result = 'No DR'
+        elif(r==1):
+            result = 'Mild DR'
+        elif(r==2):
+            result='Moderate DR'
+        elif(r==3):
+            result='Severe DR'
+        else:
+            result='Proliferative DR'
+        
+        return result
     else:
         return 'there is no scanned image attached'
 
