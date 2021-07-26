@@ -27,7 +27,7 @@ def predict():
         img = np.reshape(img,[1,64,64,3])
         d = saved_model.predict(img) 
         r=d[0][0]
-        r=round(r)
+        r=round(r)-2
         if(r==0):
             result = 'No DR'
         elif(r==1):
