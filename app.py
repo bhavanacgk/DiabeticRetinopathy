@@ -8,7 +8,7 @@ app = Flask(__name__)
 UPLOAD_FOLDER = './upload'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-MODEL_PATH = './model/model3.h5'
+MODEL_PATH = './model/model.h5'
 saved_model = load_model(MODEL_PATH,compile=False)
 
 @app.route('/', methods=['GET'])
@@ -17,7 +17,6 @@ def index():
 
 @app.route('/predict',methods=['GET','POST'])
 def predict():
-    print(request.files)
     if request.method == 'POST':
         image_file = request.files['file']
         path = os.path.join(app.config['UPLOAD_FOLDER'], image_file.filename)
